@@ -1,3 +1,7 @@
 #pragma once
 
-void kernel_main();
+typedef void (*GlobalConstructor)(void);
+
+void initGlobalConstructor();
+
+void kernelMain();

@@ -1,11 +1,25 @@
 #include "kernel.h"
 
-extern "C" void kernel_entry() 
+extern "C" void kernelEntry() 
 {
-    kernel_main();
+    kernelMain();
 }
 
-void kernel_main() {
+extern GlobalConstructor __init_array_start[];
+extern GlobalConstructor __init_array_end[];
+
+void initGlobalConstructor()
+{
+    for (GlobalConstructor* ctor = __init_array_start; ctor != __init_array_end; ++ctor) {
+        (*ctor)();
+    }
+}
+
+void kernelMain()
+{
+    // Call global constructors
+    initGlobalConstructor();
+
     const char* str = "Start YananeOS!!";
     volatile unsigned char* video = (volatile unsigned char*)0xB8000;
 

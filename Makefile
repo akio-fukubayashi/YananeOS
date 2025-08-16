@@ -4,7 +4,7 @@ NASM=nasm
 LD=$(TARGET)-elf-ld
 OBJCOPY=$(TARGET)-elf-objcopy
 CFLAGS=-ffreestanding -O0 -Wall -Wextra -g
-LDFLAGS=-nostdlib -Ttext 0x10000 -e kernel_entry
+LDFLAGS=-nostdlib -T linker.ld -e kernelEntry
 
 BUILD_DIR=build
 BIN_DIR=$(BUILD_DIR)/bin
