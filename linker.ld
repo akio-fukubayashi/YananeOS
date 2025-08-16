@@ -21,4 +21,16 @@ SECTIONS {
     {
         *(.text*)
     }
+
+    .data :
+    {
+        *(.data*)
+    }
+
+    .bss :
+    {
+        __bss_start = .;
+        *(.bss*)
+        __bss_end = .;
+    }
 }

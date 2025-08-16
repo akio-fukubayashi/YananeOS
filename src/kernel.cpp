@@ -1,5 +1,7 @@
 #include "kernel.h"
 
+#include "common.h"
+
 extern "C" void kernelEntry() 
 {
     kernelMain();
@@ -7,11 +9,22 @@ extern "C" void kernelEntry()
 
 extern GlobalConstructor __init_array_start[];
 extern GlobalConstructor __init_array_end[];
+extern int* __bss_start;
+extern int* __bss_end;
 
 void initGlobalConstructor()
 {
+    // Call global constructors
     for (GlobalConstructor* ctor = __init_array_start; ctor != __init_array_end; ++ctor) {
         (*ctor)();
+    }
+}
+
+void initBSS()
+{
+    // Initialize BSS section to zero
+    for (int* ptr = __bss_start; ptr < __bss_end; ++ptr) {
+        *ptr = 0;
     }
 }
 
@@ -19,6 +32,9 @@ void kernelMain()
 {
     // Call global constructors
     initGlobalConstructor();
+
+    // Clear BSS section to 0
+    initBSS();
 
     const char* str = "Start YananeOS!!";
     volatile unsigned char* video = (volatile unsigned char*)0xB8000;
