@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "GDB Remote Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "MIMode": "gdb",
+            "miDebuggerServerAddress": "localhost:1234",
+            "targetArchitecture": "x86",
+            "miDebuggerPath": "gdb",
+            "program": "${workspaceFolder}/build/bin/kernel.elf",
+            "cwd": "${workspaceFolder}",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "set architecture i386",
+                    "description": "Set 32-bit x86 mode"
+                },
+                {
+                    "description": "Add symbol file for kernel",
+                    "text": "add-symbol-file ${workspaceFolder}/build/bin/kernel.elf 0x10000"
+                },
+            ],
+            "stopAtEntry": true
+        }
+    ]
+}
