@@ -1,5 +1,5 @@
 SECTIONS {
-    . = 0x10000;
+    . = 0x70000;
 
     /* Boot Entry */
     .text.entry :
