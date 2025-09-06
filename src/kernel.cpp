@@ -2,15 +2,15 @@
 
 #include "common.h"
 
-extern "C" void kernelEntry() 
-{
-    kernelMain();
-}
-
 extern GlobalConstructor __init_array_start[];
 extern GlobalConstructor __init_array_end[];
 extern int* __bss_start;
 extern int* __bss_end;
+
+extern "C" void kernelEntry()
+{
+    kernelMain();
+}
 
 void initGlobalConstructor()
 {
