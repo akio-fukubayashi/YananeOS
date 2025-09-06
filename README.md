@@ -94,11 +94,29 @@ make all
     ```
 
 ### GDB
-```sh
-$ qemu-system-i386 -drive file=./build/YananeOS.img,format=raw -s -S
-$ gdb
-(gdb) target remote :1234
-(gdb) set architecture i8086
-(gdb) set disassemble-flavor intel
-```
+#### Bootloader
+
+- Binary Address
+    ```sh
+    $ objdump -b binary -m i8086 -D build/bin/boot.bin
+    ```
+
+- Start GDB Debug
+    ```sh
+    $ qemu-system-i386 -drive file=./build/YananeOS.img,format=raw -s -S
+    $ gdb
+    (gdb) set architecture i8086
+    (gdb) b *0x7c00
+    (gdb) target remote :1234
+    ```
+
+- Memory View
+    ```sh
+    (gdb) x/16xb 0x7c00
+    ```
+
+- Register View
+    ```sh
+    (gdb) p/x $ah
+    ```
 
